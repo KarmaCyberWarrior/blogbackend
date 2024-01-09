@@ -15,6 +15,8 @@ class Profile(models.Model):
     fname = models.CharField(max_length=30)
     lname = models.CharField(max_length=30)
     displaypic = models.ImageField(upload_to='profileimages/', null=True)
+    is_editor = models.BooleanField(default=False)
+    is_owner = models.BooleanField(default=False)
 
     def __str__(self):
         return self.fname + " @" + self.user.username

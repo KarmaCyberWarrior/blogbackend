@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+<!--Block content goes below-->
+
+
+  {% block content %}
+
+    {% if user.is_authenticated %}
+      <h1>hi</h1>
+      
+    {% else %}
+      <div class="w-full flex justify-center mt-[10rem]">
+        <div>
+          <h2 class="text-3xl font-semibold text-center">Login</h2>
+          <h3 class="text-xl mt-4">Hello <span class="text-rose-700">Team member!</span></h3><br>
+          <form method="POST">{% csrf_token %}
+            <label class="text-lg font-semibold">Username: </label><br>
+            <input type="text" name="username" id="inputUsername" placeholder="E.g reiastrid" required class="mt-2 border border-black h-10 p-4"><br><br>
+
+
+            <label class="text-lg font-semibold">Password: </label><br>
+            <input type="password" name="password" id="inputPassword" placeholder="Password" required class="mt-2 border border-black h-10 p-4"><br>
+
+            
+
+            
+            {% for field in login_form %}
+              <p>
+              {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+              {% endfor %}
+              </p>
+            {% endfor %}
+            
+            {% if login_form.non_field_errors %}
+              <div style="color: red">
+                <p>{{login_form.non_field_errors}}</p>
+              </div>
+            {% endif %}
+            <br>
+            <button type="submit" class="border w-[10rem] h-10 border-rose-700">Login</button>
+        </form>
+              
+        </div>	
+      </div>      
+    {% endif %}
+
+  {% endblock %}

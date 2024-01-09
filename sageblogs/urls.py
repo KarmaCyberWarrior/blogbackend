@@ -21,5 +21,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('blogapi/', include('blogpost.urls')),
+    path('', include('controlpan.urls'))
     #path('api-token-auth/', views.obtain_auth_token, name='api-token-auth')
 ]
