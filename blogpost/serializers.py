@@ -19,13 +19,11 @@ class PostSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class CommentSerializer(serializers.ModelSerializer):
-    post = PostSerializer()
     class Meta:
         model = Comment
         fields = "__all__"
 
 class ReplySerializer(serializers.ModelSerializer):
-    comment = CommentSerializer()
     class Meta:
         model = Reply
         fields = "__all__"

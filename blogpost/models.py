@@ -1,9 +1,10 @@
 from django.db import models
-from django.template.defaultfilters import slugify
+from django.utils.text import slugify
 from django.urls import reverse
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.db.models.signals import pre_save
+from django.utils.safestring import mark_safe
 
 
 
@@ -13,6 +14,7 @@ class Profile(models.Model):
     bio = models.TextField(max_length=500)
     fname = models.CharField(max_length=30)
     lname = models.CharField(max_length=30)
+    displaypic = models.ImageField(upload_to='profileimages/', null=True)
 
     def __str__(self):
         return self.fname + " @" + self.user.username
@@ -30,21 +32,28 @@ class Post(models.Model):
     snippet     = models.TextField()
     headimg     = models.ImageField(upload_to='blogimages/', null=True)
     timestamp   = models.DateTimeField(verbose_name="date created", auto_now_add=True)
+    date        = models.DateField(verbose_name="dateposted created", auto_now_add=True)
     views       = models.IntegerField(default=0, null=True)
     commentcount = models.IntegerField(default=0)
+    totalcount  = models.IntegerField(default=0)
     profile      = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
+    isPublished  = models.BooleanField(default=False)
     tag         = models.ForeignKey(Tag, on_delete = models.SET_NULL, null=True)
+    slug			= models.SlugField(max_length=255, blank=True, unique=True)
 
     def __str__(self):
         return self.title
     
-    #def get_absolute_url(self):
-	    #return reverse("blog_detail", kwargs={"slug": self.slug, "pk": self.id})
+    
+    def save(self, *args, **kwargs):
+        # If slug is not set or is empty, generate it based on the title
+        if not self.slug:
+            self.slug = slugify(self.title)
 
-	#def save(self, *args, **kwargs):
-	    #if not self.slug:
-		    #self.slug = slugify(self.title)
-        #return super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
+
+        
+        
     
 class Section(models.Model):
     blogpost    = models.ForeignKey(Post, on_delete = models.CASCADE)
@@ -56,9 +65,11 @@ class Section(models.Model):
 
 class Comment(models.Model):
     name        = models.CharField(max_length=20, default="Anonymous")
+    email       = models.CharField(max_length=100)
     message     = models.TextField(null=True)
     date        = models.DateTimeField(verbose_name="date_comented", auto_now_add=True)
     post        = models.ForeignKey(Post, on_delete= models.CASCADE)
+    replycount  = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name + " commented on " + self.post.title
@@ -67,6 +78,7 @@ class Comment(models.Model):
         super().save(*args, **kwargs)
 
         self.post.commentcount = Comment.objects.filter(post=self.post).count()
+        self.post.totalcount   = Comment.objects.filter(post=self.post).count() + self.replycount
         self.post.save()
 
 class Sub(models.Model):
@@ -82,3 +94,9 @@ class Reply(models.Model):
 
     def __str__(self):
         return self.name + " replied " + self.comment.name + " on " + self.comment.post.title
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        self.comment.replycount = Reply.objects.filter(comment=self.comment).count()
+        self.comment.save()

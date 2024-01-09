@@ -9,13 +9,18 @@ from rest_framework import status
 from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from .permissions import IsAdminOrReadOnly
+from rest_framework.pagination import PageNumberPagination
 
+import bleach
 from rest_framework.authtoken.models import Token
 
 
 
 
 from .models import *
+
+class PostPagination(PageNumberPagination):
+    page_size = 10  # Set the number of items per page
 
 
 class UserLoginView(APIView):
@@ -66,6 +71,17 @@ def apiOverview(request):
 
 
 @api_view(['GET'])
+def postPagList(request):
+    post = Post.objects.filter(isPublished = True).order_by('-timestamp')
+    paginator = PostPagination()
+    result_page = paginator.paginate_queryset(post, request)
+
+    serializer = PostSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
+
+
+
+@api_view(['GET'])
 def sectionPhoto(request, pk):
     section = Section.objects.get(id=pk)
     image_path = section.secimg.path
@@ -77,6 +93,14 @@ def sectionPhoto(request, pk):
 def postPhoto(request, pk):
     post = Post.objects.get(id=pk)
     image_path = post.headimg.path
+
+    with open(image_path, 'rb') as image_file:
+        return HttpResponse(image_file.read(), content_type='image/jpeg')
+    
+@api_view(['GET'])
+def profilePhoto(request, pk):
+    dp = Profile.objects.get(id=pk)
+    image_path = dp.displaypic.path
 
     with open(image_path, 'rb') as image_file:
         return HttpResponse(image_file.read(), content_type='image/jpeg')
@@ -171,19 +195,83 @@ def commentDelete(request, pk):
 
 @api_view(['GET'])
 def postList(request):
-    post = Post.objects.all().order_by('-timestamp')[:3]
+    post = Post.objects.filter(isPublished = True).order_by('-timestamp')
+    
     serializer = PostSerializer(post, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
+def styleList(request):
+    styles = Tag.objects.get(tag = "Style")
+    post = Post.objects.filter(isPublished = True, tag = styles).order_by('-timestamp')
+    paginator = PostPagination()
+    result_page = paginator.paginate_queryset(post, request)
+    
+    serializer = PostSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
+
+@api_view(['GET'])
+def designList(request):
+    design = Tag.objects.get(tag = "Design")
+    post = Post.objects.filter(isPublished = True, tag = design).order_by('-timestamp')
+    paginator = PostPagination()
+    result_page = paginator.paginate_queryset(post, request)
+    
+    serializer = PostSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
+
+@api_view(['GET'])
+def foodList(request):
+    food = Tag.objects.get(tag = "Food")
+    post = Post.objects.filter(isPublished = True, tag = food).order_by('-timestamp')
+    paginator = PostPagination()
+    result_page = paginator.paginate_queryset(post, request)
+    
+    serializer = PostSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
+
+@api_view(['GET'])
+def relationshipList(request):
+    relationship = Tag.objects.get(tag = "Relationship")
+    post = Post.objects.filter(isPublished = True, tag = relationship).order_by('-timestamp')
+    paginator = PostPagination()
+    result_page = paginator.paginate_queryset(post, request)
+    
+    serializer = PostSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
+
+@api_view(['GET'])
+def wellbeingList(request):
+    wellbeing = Tag.objects.get(tag = "Wellbeing")
+    post = Post.objects.filter(isPublished = True, tag = wellbeing).order_by('-timestamp')
+    paginator = PostPagination()
+    result_page = paginator.paginate_queryset(post, request)
+    
+    serializer = PostSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
+
+
+@api_view(['GET'])
 def postListTrend(request):
-    post = Post.objects.all().order_by('views')
+    post = Post.objects.filter(isPublished = True).order_by('-views')
+    serializer = PostSerializer(post, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def postListRand(request):
+    post = Post.objects.filter(isPublished = True).order_by('?')[:9]
+    serializer = PostSerializer(post, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def postListComment(request):
+    post = Post.objects.filter(isPublished = True).order_by('-totalcount')[:10]
     serializer = PostSerializer(post, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 def postDetail(request, pk):
-    post = Post.objects.get(id=pk)
+    post = Post.objects.get(slug=pk, isPublished=True)
     serializer = PostSerializer(post, many=False)
     return Response(serializer.data)
 
