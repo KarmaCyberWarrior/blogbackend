@@ -17,6 +17,11 @@ class Profile(models.Model):
     displaypic = models.ImageField(upload_to='profileimages/', null=True)
     is_editor = models.BooleanField(default=False)
     is_owner = models.BooleanField(default=False)
+    published_post = models.IntegerField(default=0)
+    draft_posts = models.IntegerField(default=0)
+    total_posts = models.IntegerField(default=0)
+    total_comments = models.IntegerField(default=0)
+    totalpost_impressions = models.IntegerField(default=0)
 
     def __str__(self):
         return self.fname + " @" + self.user.username
