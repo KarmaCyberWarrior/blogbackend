@@ -18,7 +18,7 @@
                 <option value="{{wellbeing.tag}}">Wellbeing</option>
                 <option value="{{food.tag}}">Food</option>
             </select><br><br>
-            <input type="file" name="image">
+            <input type="file" name="image" accept="image/jpeg" required><br><br>
             <button type="submit" class="border w-[10rem] h-10 border-rose-700">Create</button><br><br>
             <a href="{% url 'index' %}" class="text-lg text-rose-700">Cancel</a>
           </form><br>
