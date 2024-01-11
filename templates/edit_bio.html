@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="w-full flex justify-center mt-[10rem]">
+    <div>
+        <form method="POST">{% csrf_token %}
+            <label class="text-lg font-semibold">Bio: </label><br>
+            <input type="text" name="bio" id="bio" placeholder="Update your bio" required class="mt-2 border border-black h-10 p-4"><br><br>
+            <button type="submit" class="border w-[10rem] h-10 border-rose-700">Update</button>
+            <a href="{% url 'index' %}">Cancel</a>
+          </form>
+    </div>
+</div>
+
+{% endblock %}
