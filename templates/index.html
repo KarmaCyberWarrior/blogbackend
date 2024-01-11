@@ -7,9 +7,10 @@
 
     {% if user.is_authenticated %}
       <div class="w-full">
-        <div class="md:ml-10 md:mr-10">
-          <div class="mt-12 grid md:grid-cols-2 xl:grid-cols-3 gap-4">
-            <div class="bg-white p-2 sm:p-4 rounded-md shadow-md">
+        <div class="md:ml-10 md:mr-10 grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4">
+
+            <div class="bg-white p-2 sm:p-4 rounded-md shadow-md md:col-span-2">
               <h1 class="text-xl sm:text-3xl">Welcome Back <span class="text-rose-700">{{profile.fname}} {{profile.lname}}</span></h1>
               <div class="w-[17rem] breakwords mt-4 text-md sm:text-lg">
                 <p>Your Public About Bio: </p>
@@ -19,8 +20,8 @@
             </div> 
             
             <div class="bg-white p-2 sm:p-4 rounded-md shadow-md">
-              <p class="text-xl sm:text-3xl">Posts</p>
-              <p class="text-md sm:text-lg mt-4">Total Post: {{profilepost}}</p>
+              <p class="text-xl">Posts</p>
+              <p class="text-md mt-4">Total Post: {{profilepost}}</p>
               <div class="grid grid-cols-2 gap-4 mt-4">
                 <p>Published- {{publishedpost}}</p>
                 <p>Draft- {{draftpost}}</p>
@@ -28,15 +29,13 @@
             </div>
 
             <div class="bg-white p-2 md:p-4 rounded-md shadow-md">
-              <p class="text-xl sm:text-3xl">Comments & Impressions</p>
-              <p class="text-md sm:text-lg mt-4">Total Comments: {{profilecomment}}</p>
+              <p class="text-xl">Comments & Impressions</p>
+              <p class="text-md mt-4">Total Comments: {{profilecomment}}</p>
               
-              <p class="text-md sm:text-lg mt-4">Total Impressions: {{profileimpressions}}</p>
+              <p class="text-md mt-4">Total Impressions: {{profileimpressions}}</p>
             </div>
-          </div>
 
-          <div class="grid grid-cols-3 gap-8 mt-12">
-            <div class="bg-white shadow-md rounded-md h-[20rem] overflow-y-scroll">
+            <div class="bg-white shadow-md rounded-md p-2 md:col-span-2 h-[13rem] overflow-y-scroll">
               <div class="mt-4 ml-8">
                 <p class="text-lg font-semibold">Publisheds Posts</p>
                 
@@ -46,7 +45,16 @@
                 
               </div>
             </div>
-            <div class="col-span-2 bg-white shadow-md rounded-md h-[20rem] overflow-y-scroll">
+          </div>
+
+          <div class="grid grid-cols-1 gap-8 mt-12">
+            <div class="grid grid-cols-1 justify-items-center lg:grid-cols-2 xl:grid-cols-3 gap-2">
+              <button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[10rem]">Add a team member</button>
+              <button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[10rem]">Make a post</button>
+              <button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[15rem]">Send a team announcement</button>
+            </div>
+
+            <div class="bg-white shadow-md rounded-md h-[20rem] overflow-y-scroll">
               
             </div>
           </div>
