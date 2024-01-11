@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="w-full flex justify-center mt-[10rem]">
+    <div>
+        <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+            <label class="text-lg font-semibold">Title: </label><br>
+            <input type="text" name="title" id="title" placeholder="Post title" required class="mt-2 border border-black h-10 p-4"><br><br>
+            <label class="text-lg font-semibold">Brief: </label><br>
+            <textarea type="text" name="breif" id="breif" placeholder="The first few sentence of your post" required class="mt-2 border border-black h-24 p-4"></textarea><br><br>
+            <label class="text-lg font-semibold">Snippet: </label><br>
+            <input type="text" name="snippet" id="snippet" placeholder="A one sentence quote" required class="mt-2 border border-black h-10 p-4"><br><br>
+            <label class="text-lg font-semibold">Tag: </label><br>
+            <select class="mt-2 border border-black" name="tag">
+                <option value="{{style.tag}}">Style</option>
+                <option value="{{design.tag}}">Design</option>
+                <option value="{{relationship.tag}}">relationship</option>
+                <option value="{{wellbeing.tag}}">Wellbeing</option>
+                <option value="{{food.tag}}">Food</option>
+            </select><br><br>
+            <input type="file" name="image">
+            <button type="submit" class="border w-[10rem] h-10 border-rose-700">Create</button><br><br>
+            <a href="{% url 'index' %}" class="text-lg text-rose-700">Cancel</a>
+          </form><br>
+    </div>
+</div>
+
+{% endblock %}

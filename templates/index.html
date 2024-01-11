@@ -59,8 +59,8 @@
           <div class="grid grid-cols-1 gap-8 mt-12">
             <div class="grid grid-cols-1 justify-items-center lg:grid-cols-2 xl:grid-cols-3 gap-2">
               <button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[10rem]">Add a team member</button>
-              <button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[10rem]">Make a post</button>
-              <button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[15rem]">Send a team announcement</button>
+              <a href="{% url 'create-post' %}"><button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[10rem]">Make a post</button></a>
+              <button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[15rem]">Edit drafted posts</button>
             </div>
 
             <div class="bg-white shadow-md rounded-md h-[20rem] overflow-y-scroll">

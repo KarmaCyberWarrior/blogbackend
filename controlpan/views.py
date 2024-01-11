@@ -86,4 +86,10 @@ def createpost(request):
         tag = Tag.objects.get(tag=request.POST.get("tag"))
         newpost = Post(title=request.POST.get("title"), breif=request.POST.get("breif"), snippet=request.POST.get("snippet"), headimg=request.FILES.get("image"), tag=tag, profile=profile)
         newpost.save()
+        profile.draft_posts = profile.draft_posts + 1
+        profile.total_posts = profile.total_posts + 1
+        profile.save()
+        return redirect("index")
+    
+    return render(request, "create_post.html", context)
         
