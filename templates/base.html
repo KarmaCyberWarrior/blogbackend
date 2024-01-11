@@ -20,6 +20,32 @@
 </head> 
 
 <body> 
+	{% if user.is_authenticated %}
+		<nav class='w-full h-24 fixed top-0 flex flex-row justify-center items-center bg-white text-black'>
+			<div class='w-5/6 flex justify-center md:inline md:w-2/6'>
+				<h1 class='text-4xl md:text-3xl lg:text-4xl tracking-wider cursor-pointer'>Coffeewithrei</h1>
+			</div>
+
+			<div class='md:w-4/6 -ml-8 hidden lg:flex flex-row justify-center items-center text-black text-lg'>
+				<p class='cursor-pointer hover:underline hover:decoration-cyan-500 hover:decoration-2 hover:text-cyan-800'>See team</p>
+				<p class='cursor-pointer pl-8 hover:underline hover:decoration-cyan-500 hover:decoration-2 hover:text-cyan-800'>Log out</p>
+				<p class='cursor-pointer pl-8 hover:underline hover:decoration-cyan-500 hover:decoration-2 hover:text-cyan-800'>View blog</p>
+			</div>
+
+			<svg class="w-6 h-6 lg:hidden cursor-pointer text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14" id='togglebutton'>
+				<path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15"/>
+			</svg>
+		</nav>
+		
+		<div class='h-full left-0 top-0 w-0 bg-white fixed lg:hidden overflow-hidden flex items-center justify-center'>
+		<div class='text-2xl'>
+			<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" className="-mt-12 cursor-pointer" viewBox="0 0 16 16"> <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/> </svg>
+			<p class='mt-8 cursor-pointer' onClick={closeButton}>See team</p>
+			<p class='mt-8 cursor-pointer' onClick={closeButton}>Log out</p>
+			<p class='mt-8 cursor-pointer' onClick={closeButton}>View blog</p>
+		</div>
+		</div>
+	{% endif %}
 	
 	{% block content %}
 
