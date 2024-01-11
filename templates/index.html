@@ -15,7 +15,7 @@
               <div class="w-[17rem] breakwords mt-4 text-md sm:text-lg">
                 <p>Your Public About Bio: </p>
                 <p class="mt-2">{{profile.bio}}</p>
-                <button class="border w-[7rem] h-8 border-rose-700 mt-4 rounded-md hover:bg-rose-700 hover:text-white">Edit Bio</button>
+                <a href="{% url 'editbio'%}"><button class="border w-[7rem] h-8 border-rose-700 mt-4 rounded-md hover:bg-rose-700 hover:text-white">Edit Bio</button></a>
               </div>  
             </div> 
             
@@ -35,13 +35,22 @@
               <p class="text-md mt-4">Total Impressions: {{profileimpressions}}</p>
             </div>
 
-            <div class="bg-white shadow-md rounded-md p-2 md:col-span-2 h-[13rem] overflow-y-scroll">
+            <div class="bg-white shadow-md rounded-md p-2 md:col-span-2 h-[17rem] overflow-y-scroll">
               <div class="mt-4 ml-8">
                 <p class="text-lg font-semibold">Publisheds Posts</p>
-                
+
+                <div class="grid grid-cols-1 gap-4 mt-4">                
                 {% for post in posts %}
-                  <p class="mt-2">{{post.title}}</p>
+                  <div class="flex">
+                    <img src="http://127.0.0.1:8000/blogapi/post-photo/{{post.id}}/" class="w-20 h-12">
+                    <div class="ml-4">
+                      <p class="hover:text-rose-700 cursor-pointer">{{post.title}}</p>
+                      <p class="text-sm">{{post.snippet}}</p>
+                    </div>
+                  </div>
+                  <div class="w-full h-px bg-gray-300"></div>
                 {% endfor %}
+                </div>
                 
               </div>
             </div>

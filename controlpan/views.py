@@ -61,5 +61,29 @@ def editbio(request):
     else:
         return redirect("index")
     
-    return render(request, "editbio.html", context)
+    return render(request, "edit_bio.html", context)
+
+def createpost(request):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    style = Tag.objects.get(tag="Style")
+    relationship = Tag.objects.get(tag="Relationship")
+    design = Tag.objects.get(tag="Design")
+    food = Tag.objects.get(tag="Food")
+    wellbeing = Tag.objects.get(tag="Wellbeing")
+    context={
+        "style": style,
+        "relationship": relationship,
+        "design": design,
+        "food": food,
+        "wellbeing": wellbeing,
+    }
+
+    if user.is_authenticated == False:
+        return redirect("index")
+    
+    if request.POST:
+        tag = Tag.objects.get(tag=request.POST.get("tag"))
+        newpost = Post(title=request.POST.get("title"), breif=request.POST.get("breif"), snippet=request.POST.get("snippet"), headimg=request.FILES.get("image"), tag=tag, profile=profile)
+        newpost.save()
         
