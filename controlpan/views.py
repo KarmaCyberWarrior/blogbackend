@@ -111,13 +111,35 @@ def editpost(request, pk):
     user = request.user
     profile = Profile.objects.get(user=user)
     post = Post.objects.get(slug=pk)
-
     context = {
         "profile": profile,
         "post": post,
     }
 
+    sections = Section.objects.filter(blogpost=post)
+
+    if sections:
+        context["sections"] = sections
+
+    
+
     if user.is_authenticated == False:
         return redirect("index") 
     
     return render(request, "editpost.html", context)
+
+
+def publishpost(request, pk):
+    user = request.user
+    post = Post.objects.get(slug=pk)
+    context ={
+        "user": user,
+    }
+
+    if user.is_authenticated == False:
+        return redirect("index")
+    else:
+        post.isPublished = True
+        post.save()
+    
+    return render(request, "published.html", context)
