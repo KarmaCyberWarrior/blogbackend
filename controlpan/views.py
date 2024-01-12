@@ -96,7 +96,7 @@ def createpost(request):
 def draftedpost(request):
     user = request.user
     profile = Profile.objects.get(user=user)
-    posts = Post.objects.filter(profile=profile)
+    posts = Post.objects.filter(profile=profile, isPublished=False).order_by("-timestamp")
     context ={
         "profile": profile,
         "posts": posts
@@ -107,5 +107,9 @@ def draftedpost(request):
     
     return render(request, "draftedpost.html", context)
     
+def editpost(request, pk):
+    user = request.user
+    profile = Profile.objects.get(user=user)
 
-        
+    if user.is_authenticated == False:
+        return redirect("index") 

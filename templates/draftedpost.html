@@ -1,6 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
+<div class="w-full mt-28">
+    <p class="text-center text-3xl">Drafted/Unpublished posts</p>
+    <p class="text-center text-lg mt-2 text-red-600 font-semibold">Edit drafted posts by adding the content before publishing!!</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12 ml-8 mr-8">
+        {% for post in posts %}
+            <div>
+                <img src="http://127.0.0.1:8000/blogapi/post-photo/{{post.id}}" class="w-full h-[15rem]">
+                <p class="text-center mt-4 text-xl hover:text-rose-700 cursor-pointer">{{ post.title }}</p>
+                <p class="text-lg text-center mt-2">{{post.snippet}}</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 
 {% endblock %}
