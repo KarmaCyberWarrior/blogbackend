@@ -110,6 +110,14 @@ def draftedpost(request):
 def editpost(request, pk):
     user = request.user
     profile = Profile.objects.get(user=user)
+    post = Post.objects.get(slug=pk)
+
+    context = {
+        "profile": profile,
+        "post": post,
+    }
 
     if user.is_authenticated == False:
         return redirect("index") 
+    
+    return render(request, "editpost.html", context)

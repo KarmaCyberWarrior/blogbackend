@@ -8,7 +8,7 @@
         {% for post in posts %}
             <div>
                 <img src="http://127.0.0.1:8000/blogapi/post-photo/{{post.id}}" class="w-full h-[15rem]">
-                <p class="text-center mt-4 text-xl hover:text-rose-700 cursor-pointer">{{ post.title }}</p>
+                <a href="http://127.0.0.1:8000/edit-post/{{post.slug}}"><p class="text-center mt-4 text-xl hover:text-rose-700 cursor-pointer">{{ post.title }}</p></a>
                 <p class="text-lg text-center mt-2">{{post.snippet}}</p>
             </div>
         {% endfor %}
