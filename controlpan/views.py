@@ -92,4 +92,20 @@ def createpost(request):
         return redirect("index")
     
     return render(request, "create_post.html", context)
+
+def draftedpost(request):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    posts = Post.objects.filter(profile=profile)
+    context ={
+        "profile": profile,
+        "posts": posts
+    }
+
+    if user.is_authenticated == False:
+        return redirect("index")
+    
+    return render(request, "draftedpost.html", context)
+    
+
         
