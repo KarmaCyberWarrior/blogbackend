@@ -11,18 +11,36 @@
                 <p class="mt-4 text-lg">{{post.breif}}</p>
 
                 <div>
-                    <p class="mt-8 text-xl text-red-600 font-semibold text-center">Sections--- sections are paragraphs in your post.</p>
-                    {% for section in sections %}
-                        {% if section.secimg %}
-                            <img src="http://127.0.0.1:8000/blogapi/section-photo/{{section.id}}">
-                        {% endif %}
-                        <p class="mt-8 text-lg">{{section.body}}</p>
-                    {% endfor %}
+                    <p class="mt-8 text-xl text-red-600 font-semibold text-center">Sections--- sections are paragraphs in your post.</p><br>
+                    <div class="grid grid-cols-1 gap-12">                        
+                        {% for section in sections %}
+                            <section>
+                                {% if section.secimg %}
+                                    <img src="http://127.0.0.1:8000/blogapi/section-photo/{{section.id}}">
+                                {% endif %}
+                                <p class="mt-8 text-lg">{{section.body}}</p>
+                            </section>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mt-0 w-0 grid justify-items-center overflow-hidden" id="secform">
+                        <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+                            <label class="text-lg font-semibold">Image: </label><br>
+                            <input type="file" class="mt-2" name="image" accept="image/jpeg"><br><br>                            
+                            <label class="text-lg font-semibold">Body: </label><br>
+                            <textarea type="text" name="body" id="body" placeholder="Paragraph content" required class="mt-2 w-5/6 border border-black h-24 p-4"></textarea><br><br>
+                            
+                            <button type="submit" class="border w-[10rem] h-10 border-rose-700">Post</button><br><br>
+                            <p class="text-lg text-rose-700 cursor-pointer" id="closesecform">Cancel</p>
+                        </form><br>
+                    </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 mt-12 gap-4 md:gap-8">
-                        <button class="border border-rose-700 h-10 hover:bg-rose-700 hover:text-white rounded-md">Add section</button>
+                        <button class="border border-rose-700 h-10 hover:bg-rose-700 hover:text-white rounded-md" id="opensecform">Add section</button>
                         {% if post.isPublished == False %}
                             <button class="border border-rose-700 h-10 hover:bg-rose-700 hover:text-white rounded-md" id="publish">Publish</button>
+                        {% else %}
+                            <button class="border border-rose-700 h-10 hover:bg-rose-700 hover:text-white rounded-md" id="unpublish">Unpublish</button>
                         {% endif %}
                         <button class="border border-rose-700 h-10 hover:bg-rose-700 hover:text-white rounded-md">Delete</button>
                     </div>
@@ -34,7 +52,7 @@
     <div class="fixed w-full h-0 bg-[#4D3b3a39] top-0 left-0 flex justify-center items-center overflow-hidden" id="confirm">
         <div class="w-5/6 h-[20rem] bg-white rounded-md grid grid-cols-1 justify-items-center breakwords">
 
-            <p class="text-xl font-semibold text-center mt-12">Are you sure you want to delete?</p>
+            <p class="text-xl font-semibold text-center mt-12">Are you sure you want to Publish?</p>
 
             <div class="flex text-lg">
                 <a href="http://127.0.0.1:8000/publish/{{post.slug}}"><p class="text-lime-700 cursor-pointer">Confirm</p></a>

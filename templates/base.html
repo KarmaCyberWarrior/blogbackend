@@ -59,6 +59,20 @@
 		var publishbtn = document.getElementById("publish");
 		var closepublish = document.getElementById("closepublish");
 
+		var secform = document.getElementById("secform");
+		var opensecform = document.getElementById("opensecform");
+		var closesecform = document.getElementById("closesecform");
+
+		function opensec(){
+			secform.style.width = "100%";
+			secform.style.marginTop = "7rem";
+		}
+
+		function closesec(){
+			secform.style.width = "0";
+			secform.style.marginTop = "0";
+		}
+
 		function closepub(){
 			publishmenu.style.height = "0";
 		}
@@ -74,6 +88,14 @@
 		function closenav(){
 			nav.style.width = "0";
 		}
+
+		opensecform.addEventListener('click', function(){
+			opensec();
+		})
+
+		closesecform.addEventListener('click', function(){
+			closesec();
+		})
 
 		publishbtn.addEventListener('click', function(){
 			publish();

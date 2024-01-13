@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 from blogpost.models import *
 from django.contrib.auth import login, authenticate, logout #add this
 from django.contrib import messages
@@ -121,25 +122,24 @@ def editpost(request, pk):
     if sections:
         context["sections"] = sections
 
-    
+    if post.profile == profile:
+        if request.POST:
+            newsection = Section(secimg=request.FILES.get("image"), body=request.POST.get("body"), blogpost=post)
+            newsection.save()
+            return HttpResponseRedirect(request.path_info) 
+    else:
+        return redirect("index") 
+     
 
     if user.is_authenticated == False:
         return redirect("index") 
     
     return render(request, "editpost.html", context)
 
-def createsection(request, pk):
-    user = request.user
-    post = Post.objects.get(slug=pk)
-
-    context ={}
-
-    if user.is_authenticated == False:
-        return redirect("index")
-
 
 def publishpost(request, pk):
     user = request.user
+    profile = Profile.objects.get(user=user)
     post = Post.objects.get(slug=pk)
     context ={
         "user": user,
@@ -148,8 +148,20 @@ def publishpost(request, pk):
 
     if user.is_authenticated == False:
         return redirect("index")
-    else:
+    
+    if post.profile == profile:
         post.isPublished = True
         post.save()
+    else:
+        return redirect("index")
     
     return render(request, "published.html", context)
+
+def deletepost(request, pk):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    post = Post.objects.get(slug=pk)
+    context = {
+        "post": post,
+    }
+
