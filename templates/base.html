@@ -55,6 +55,17 @@
 		var nav = document.getElementById("navbar");
 		var opene = document.getElementById("open");
 		var closing = document.getElementById("close");
+		var publishmenu = document.getElementById("confirm");
+		var publishbtn = document.getElementById("publish");
+		var closepublish = document.getElementById("closepublish");
+
+		function closepub(){
+			publishmenu.style.height = "0";
+		}
+
+		function publish(){
+			publishmenu.style.height = "100%";
+		}
 
 		function opennav(){
 			nav.style.width = "100%";
@@ -63,6 +74,14 @@
 		function closenav(){
 			nav.style.width = "0";
 		}
+
+		publishbtn.addEventListener('click', function(){
+			publish();
+		})
+
+		closepublish.addEventListener('click', function(){
+			closepub();
+		})
 
 		opene.addEventListener('click', function(){
 			opennav();

@@ -128,12 +128,22 @@ def editpost(request, pk):
     
     return render(request, "editpost.html", context)
 
+def createsection(request, pk):
+    user = request.user
+    post = Post.objects.get(slug=pk)
+
+    context ={}
+
+    if user.is_authenticated == False:
+        return redirect("index")
+
 
 def publishpost(request, pk):
     user = request.user
     post = Post.objects.get(slug=pk)
     context ={
         "user": user,
+        "post": post,
     }
 
     if user.is_authenticated == False:
