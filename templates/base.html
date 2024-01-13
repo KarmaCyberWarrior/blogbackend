@@ -59,9 +59,29 @@
 		var publishbtn = document.getElementById("publish");
 		var closepublish = document.getElementById("closepublish");
 
+		var delmenu = document.getElementById("delconfirm");
+		var delbtn = document.getElementById("delete");
+		var closedel = document.getElementById("closedel");
+
 		var secform = document.getElementById("secform");
 		var opensecform = document.getElementById("opensecform");
 		var closesecform = document.getElementById("closesecform");
+
+		function opendelmenu(){
+			delmenu.style.height = "100%";
+		}
+
+		function closedelmenu(){
+			delmenu.style.height = "0";
+		}
+
+		delbtn.addEventListener('click', function(){
+			opendelmenu();
+		})
+
+		closedel.addEventListener('click', function(){
+			closedelmenu();
+		})
 
 		function opensec(){
 			secform.style.width = "100%";

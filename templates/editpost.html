@@ -42,7 +42,7 @@
                         {% else %}
                             <button class="border border-rose-700 h-10 hover:bg-rose-700 hover:text-white rounded-md" id="unpublish">Unpublish</button>
                         {% endif %}
-                        <button class="border border-rose-700 h-10 hover:bg-rose-700 hover:text-white rounded-md">Delete</button>
+                        <button class="border border-rose-700 h-10 hover:bg-rose-700 hover:text-white rounded-md" id="delete">Delete</button>
                     </div>
                 </div>
             </div>
@@ -57,6 +57,19 @@
             <div class="flex text-lg">
                 <a href="http://127.0.0.1:8000/publish/{{post.slug}}"><p class="text-lime-700 cursor-pointer">Confirm</p></a>
                 <p class="ml-8 text-red-600 underline decoration-red-600 cursor-pointer" id="closepublish">Cancel</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="fixed w-full h-0 bg-[#4D3b3a39] top-0 left-0 flex justify-center items-center overflow-hidden" id="delconfirm">
+        <div class="w-5/6 h-[20rem] bg-white rounded-md grid grid-cols-1 justify-items-center breakwords">
+
+            <p class="text-xl font-semibold text-center mt-12">Are you sure you want to Delete?</p>
+
+            <div class="flex text-lg">
+                <a href="http://127.0.0.1:8000/delete/{{post.slug}}"><p class="text-lime-700 cursor-pointer">Confirm</p></a>
+                <p class="ml-8 text-red-600 underline decoration-red-600 cursor-pointer" id="closedel">Cancel</p>
             </div>
 
         </div>

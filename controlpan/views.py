@@ -90,7 +90,7 @@ def createpost(request):
         profile.draft_posts = profile.draft_posts + 1
         profile.total_posts = profile.total_posts + 1
         profile.save()
-        return redirect("index")
+        return redirect("draft-posts")
     
     return render(request, "create_post.html", context)
 
@@ -164,4 +164,14 @@ def deletepost(request, pk):
     context = {
         "post": post,
     }
+
+    if user.is_authenticated == False:
+        return redirect("index")
+    
+    if post.profile == profile:
+        post.delete()
+    else:
+        return redirect("index")
+
+    return render(request, "deleted.html", context)
 
