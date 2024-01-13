@@ -186,16 +186,33 @@ def manageteam(request):
     user = request.user
     profile = Profile.objects.get(user=user)
 
+    team = Profile.objects.all()
+
     context = {
         "user": user,
         "profile": profile,
+        "teams": team,
+    }
+
+    if user.is_authenticated == False:
+        return redirect("index")
+    
+    return render(request, "manageteam.html", context)
+
+def editteamMember(request, pk):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    member = Profile.object.get(id=pk)
+
+    context ={
+        "user": user,
+        "member": member,
     }
 
     if user.is_authenticated == False:
         return redirect("index")
     
     if profile.is_owner == False:
-        return redirect("index")
-    
-    return render(request, "manageteam.html", context)
+        return redirect("manageteam")
 
+    return render(request, "editmember.html", context)
