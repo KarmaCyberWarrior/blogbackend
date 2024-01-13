@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="mt-28 w-full">
+        <p class="text-3xl text-center">Change member account or delete</p>
+
+        <div class="grid grid-cols-1 justify-items-center mt-12 ml-6 mr-6">
+            <img src="http://127.0.0.1:8000/blogapi/profile-photo/{{member.id}}" class="w-[20rem] h-[15rem]">
+            <p class="mt-2 text-xl font-semibold">{{member.fname}} {{member.lname}}</p>
+            <p class="mt-2 text-lg">{{member.bio}}</p>
+            {% if member.is_editor %}
+                <p class="mt-2">Member is an Editor</p>
+            {% else %}
+                <p class="mt-2">Member is not an editor</p>
+            {% endif %}
+
+            <div class="grid grid-cols-1 gap-4 mt-12">
+                <button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[10rem]">Change Member Role</button>
+                <button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[10rem]">Delete Member</button>
+            </div>
+        </div>
+
+    </div>
+    <br>
+{% endblock %}

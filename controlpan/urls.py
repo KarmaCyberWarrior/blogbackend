@@ -12,4 +12,5 @@ urlpatterns = [
     path('publish/<str:pk>', views.publishpost, name="publish"),
     path('delete/<str:pk>', views.deletepost, name="delete"),
     path('team/', views.manageteam, name="manage-team"),
+    path('edit-member/<str:pk>', views.editteamMember, name="edit-member"),
 ]

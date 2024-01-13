@@ -202,7 +202,7 @@ def manageteam(request):
 def editteamMember(request, pk):
     user = request.user
     profile = Profile.objects.get(user=user)
-    member = Profile.object.get(id=pk)
+    member = Profile.objects.get(id=pk)
 
     context ={
         "user": user,
@@ -213,6 +213,9 @@ def editteamMember(request, pk):
         return redirect("index")
     
     if profile.is_owner == False:
+        return redirect("manageteam")
+    
+    if member.is_owner == True:
         return redirect("manageteam")
 
     return render(request, "editmember.html", context)

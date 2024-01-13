@@ -16,19 +16,20 @@
                 {% else %}
                     <div class="grid grid-cols-1 justify-items-center">
                         <img src="http://127.0.0.1:8000/blogapi/profile-photo/{{team.id}}" class="w-[20rem] h-[15rem]">
-                        <p class="text-lg mt-4">{{team.fname}} {{team.lname}}</p>
+                        <a href="http://127.0.0.1:8000/edit-member/{{team.id}}"><p class="text-lg mt-4 hover:text-rose-700">{{team.fname}} {{team.lname}}</p></a>
                         <p class="mt-2">{{team.bio}}</p>
                     </div>
                 {% endif %}
             {% endfor %}
 
-            
+
             {% if profile.is_owner %}
                 <button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[10rem]">Add team member</button>
             {% endif %}
+            
         </div>
 
         
-    </div>
+    </div><br>
 
 {% endblock %}
