@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from blogpost.models import *
 from django.contrib.auth import login, authenticate, logout #add this
@@ -219,3 +219,23 @@ def editteamMember(request, pk):
         return redirect("manageteam")
 
     return render(request, "editmember.html", context)
+
+def deletemember(request, pk):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+
+    member = Profile.objects.get(id=pk)
+    usergoing = get_object_or_404(User, id=member.user)
+
+    if user.is_authenticated == False:
+        return redirect("index")
+    
+    if profile.is_owner == False:
+        return redirect("manageteam")
+    
+    if member.is_owner == True:
+        return redirect("manageteam")
+    
+    usergoing.delete()
+    
+    return render(request, "deletemember.html")

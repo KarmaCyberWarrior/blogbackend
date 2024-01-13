@@ -16,10 +16,43 @@
 
             <div class="grid grid-cols-1 gap-4 mt-12">
                 <button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[10rem]">Change Member Role</button>
-                <button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[10rem]">Delete Member</button>
+                <button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[10rem]" id="delete">Delete Member</button>
             </div>
         </div>
 
     </div>
+    <div class="fixed w-full h-0 bg-[#4D3b3a39] top-0 left-0 flex justify-center items-center overflow-hidden" id="delconfirm">
+        <div class="w-5/6 h-[20rem] bg-white rounded-md grid grid-cols-1 justify-items-center breakwords">
+
+            <p class="text-xl font-semibold text-center mt-12">Are you sure you want to Delete?</p>
+
+            <div class="flex text-lg">
+                <a href="http://127.0.0.1:8000/delete-member/{{member.id}}"><p class="text-lime-700 cursor-pointer">Confirm</p></a>
+                <p class="ml-8 text-red-600 underline decoration-red-600 cursor-pointer" id="closedel">Cancel</p>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        var delmenu = document.getElementById("delconfirm");
+		var delbtn = document.getElementById("delete");
+		var closedel = document.getElementById("closedel");
+
+        function opendelmenu(){
+			delmenu.style.height = "100%";
+		}
+
+		function closedelmenu(){
+			delmenu.style.height = "0";
+		}
+
+        delbtn.addEventListener('click', function(){
+			opendelmenu();
+		});
+
+		closedel.addEventListener('click', function(){
+			closedelmenu();
+		});
+    </script>
     <br>
 {% endblock %}

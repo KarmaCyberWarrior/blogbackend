@@ -13,4 +13,5 @@ urlpatterns = [
     path('delete/<str:pk>', views.deletepost, name="delete"),
     path('team/', views.manageteam, name="manage-team"),
     path('edit-member/<str:pk>', views.editteamMember, name="edit-member"),
+    path('delete-member/<str:pk>', views.deletemember, name="delete-member"),
 ]
