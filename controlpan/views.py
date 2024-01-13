@@ -83,6 +83,9 @@ def createpost(request):
     if user.is_authenticated == False:
         return redirect("index")
     
+    if profile.is_editor == False:
+        return redirect("index")
+    
     if request.POST:
         tag = Tag.objects.get(tag=request.POST.get("tag"))
         newpost = Post(title=request.POST.get("title"), breif=request.POST.get("breif"), snippet=request.POST.get("snippet"), headimg=request.FILES.get("image"), tag=tag, profile=profile)
@@ -104,6 +107,9 @@ def draftedpost(request):
     }
 
     if user.is_authenticated == False:
+        return redirect("index")
+    
+    if profile.is_editor == False:
         return redirect("index")
     
     return render(request, "draftedpost.html", context)
@@ -174,4 +180,22 @@ def deletepost(request, pk):
         return redirect("index")
 
     return render(request, "deleted.html", context)
+
+
+def manageteam(request):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+
+    context = {
+        "user": user,
+        "profile": profile,
+    }
+
+    if user.is_authenticated == False:
+        return redirect("index")
+    
+    if profile.is_owner == False:
+        return redirect("index")
+    
+    return render(request, "manageteam.html", context)
 

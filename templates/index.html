@@ -59,9 +59,16 @@
           <div class="grid grid-cols-1 gap-8 mt-12">
             <p class="text-lg text-center">Post you create would be in drated post. you can edit drafted post to futher edit the post an add sections</p>
             <div class="grid grid-cols-1 justify-items-center lg:grid-cols-2 xl:grid-cols-3 gap-2">
-              <button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[10rem]">Add a team member</button>
-              <a href="{% url 'create-post' %}"><button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[10rem]">Make a post</button></a>
-              <a href="{% url 'draft-posts' %}"><button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[15rem]">Edit drafted posts</button></a>
+              {% if profile.is_owner %}
+                <button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[10rem]">Manage team</button>
+              {% else %}
+                <button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[10rem]">View team</button>
+              {% endif %}
+
+              {% if profile.is_editor %}
+                <a href="{% url 'create-post' %}"><button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[10rem]">Make a post</button></a>
+                <a href="{% url 'draft-posts' %}"><button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[15rem]">Edit drafted posts</button></a>
+              {% endif %}
             </div>
 
             <div class="bg-white shadow-md rounded-md h-[20rem] overflow-y-scroll">
