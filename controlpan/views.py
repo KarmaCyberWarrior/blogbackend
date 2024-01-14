@@ -284,3 +284,22 @@ def addteammember(request):
     
     return render(request, "addmember.html", context)
 
+def editname(request):
+    user = request.user
+    context = {}
+
+    if user.is_authenticated == False:
+        return redirect("index")
+    else:
+        profile = Profile.objects.get(user=user)
+        context["profile"] = profile
+        if request.POST:
+            fname = request.POST.get("fname")
+            lname = request.POST.get("lname")
+          
+            profile.fname = fname
+            profile.lname = lname
+            profile.save()
+            return redirect("index")
+        
+    return render(request, "editname.html", context)

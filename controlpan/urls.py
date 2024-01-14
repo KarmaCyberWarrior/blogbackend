@@ -15,4 +15,5 @@ urlpatterns = [
     path('edit-member/<str:pk>', views.editteamMember, name="edit-member"),
     path('delete-member/<str:pk>', views.deletemember, name="delete-member"),
     path('add-member/', views.addteammember, name="add-member"),
+    path('editname/', views.editname, name="editname"),
 ]

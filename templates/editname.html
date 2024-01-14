@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="w-full mt-[10rem] flex justify-center">
+        <div>
+            <form method="POST">{% csrf_token %}
+                <label class="text-lg font-semibold">First Name: </label><br>
+                <input type="text" name="fname" id="fname" placeholder="Update your first name" required class="mt-2 border border-black h-10 p-4"></input><br><br>
+                <label class="text-lg font-semibold">Last Name: </label><br>
+                <input type="text" name="lname" id="lname" placeholder="Update your last name" required class="mt-2 border border-black h-10 p-4"></input><br><br>
+                <button type="submit" class="border w-[10rem] h-10 border-rose-700">Update</button><br><br>
+                <a href="{% url 'index' %}" class="text-lg text-rose-700">Cancel</a>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
