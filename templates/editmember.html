@@ -14,8 +14,20 @@
                 <p class="mt-2">Member is not an editor</p>
             {% endif %}
 
-            <div class="grid grid-cols-1 gap-4 mt-12">
-                <button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[10rem]">Change Member Role</button>
+            <div class="mt-0 w-0 grid justify-items-center overflow-hidden" id="secform">
+                <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    {% if member.is_editor %}
+                        <button type="submit" class="border w-[15rem] h-10 border-rose-700">Change to 'non-editor'</button><br><br>
+
+                    {% else %}
+                        <button type="submit" class="border w-[15rem] h-10 border-rose-700">Change to editor</button><br><br>
+                    {% endif %}
+                    <p class="text-lg text-rose-700 cursor-pointer" id="closesecform">Cancel</p>
+                </form><br>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 mt-12">                
+                <button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[10rem]" id="opensecform">Change Member Role</button>
                 <button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[10rem]" id="delete">Delete Member</button>
             </div>
         </div>
@@ -38,6 +50,20 @@
 		var delbtn = document.getElementById("delete");
 		var closedel = document.getElementById("closedel");
 
+        var secform = document.getElementById("secform");
+		var opensecform = document.getElementById("opensecform");
+		var closesecform = document.getElementById("closesecform");
+
+        function opensec(){
+			secform.style.width = "100%";
+			secform.style.marginTop = "7rem";
+		}
+
+		function closesec(){
+			secform.style.width = "0";
+			secform.style.marginTop = "0";
+		}
+
         function opendelmenu(){
 			delmenu.style.height = "100%";
 		}
@@ -52,6 +78,14 @@
 
 		closedel.addEventListener('click', function(){
 			closedelmenu();
+		});
+
+        opensecform.addEventListener('click', function(){
+			opensec();
+		});
+
+		closesecform.addEventListener('click', function(){
+			closesec();
 		});
     </script>
     <br>

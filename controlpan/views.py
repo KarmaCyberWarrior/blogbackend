@@ -4,7 +4,7 @@ from blogpost.models import *
 from django.contrib.auth import login, authenticate, logout #add this
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm #add this
-from .forms import AccountAuthenticationForm
+from .forms import AccountAuthenticationForm, SignUpForm
 from numerize import numerize 
 
 # Create your views here.
@@ -217,6 +217,16 @@ def editteamMember(request, pk):
     
     if member.is_owner == True:
         return redirect("manageteam")
+    
+    if request.POST:
+        if member.is_editor:
+            member.is_editor = False
+            member.save()
+        else:
+            member.is_editor = True
+            member.save()
+
+        return HttpResponseRedirect(request.path_info)
 
     return render(request, "editmember.html", context)
 
@@ -225,7 +235,7 @@ def deletemember(request, pk):
     profile = Profile.objects.get(user=user)
 
     member = Profile.objects.get(id=pk)
-    usergoing = get_object_or_404(User, id=member.user)
+    usergoing = get_object_or_404(User, id=member.user.id)
 
     if user.is_authenticated == False:
         return redirect("index")
@@ -239,3 +249,28 @@ def deletemember(request, pk):
     usergoing.delete()
     
     return render(request, "deletemember.html")
+
+def addteammember(request):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+
+    context={
+        "profile": profile,
+    }
+
+    if user.is_authenticated == False:
+        return redirect("index")
+    
+    if profile.is_owner == False:
+        return redirect("manageteam")
+    
+    if request.POST:
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            Profile.objects.create(fname="change", lname="name", bio="change bio", user=form.save())
+            form.save()
+            return redirect("manage-team")
+        else:
+            context['addmember'] = form
+    
+    return render(request, "addmember.html", context)

@@ -24,7 +24,7 @@
 
 
             {% if profile.is_owner %}
-                <button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[10rem]">Add team member</button>
+                <a href="{% url 'add-member' %}"><button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[10rem]">Add team member</button></a>
             {% endif %}
             
         </div>

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="mt-28 w-full flex justify-center">
+        <div>
+            <h3 class="text-xl mt-4">Add <span class="text-rose-700">Team member</span></h3><br>
+            <form method="POST">{% csrf_token %}
+                <label class="text-lg font-semibold">Username: </label><br>
+                <input type="text" name="username" id="inputUsername" placeholder="E.g reiastrid" required class="mt-2 border border-black h-10 p-4"><br><br>
+
+                <label class="text-lg font-semibold">Email: </label><br>
+                <input type="email" name="email" id="email" placeholder="E.g johndoe@gmail.com" required class="mt-2 border border-black h-10 p-4"><br><br>
+
+
+                <label class="text-lg font-semibold">Password: </label><br>
+                <input type="password" name="password1" id="inputPassword" placeholder="Password" required class="mt-2 border border-black h-10 p-4"><br>
+                <input type="password" name="password2" id="inputPassword2" placeholder="Confirm password" required class="mt-2 border border-black h-10 p-4"><br>
+
+                
+
+                
+                {% for field in addmember %}
+                <p>
+                {% for error in field.errors %}
+                    <p style="color: red">{{ error }}</p>
+                {% endfor %}
+                </p>
+                {% endfor %}
+                
+                {% if addmember.non_field_errors %}
+                <div style="color: red">
+                    <p>{{addmember.non_field_errors}}</p>
+                </div>
+                {% endif %}
+                <br>
+                <button type="submit" class="border w-[10rem] h-10 border-rose-700">Create member</button>
+            </form>
+
+          </div>
+              	
+    </div>
+
+{% endblock %}
