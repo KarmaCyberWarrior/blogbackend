@@ -66,7 +66,6 @@ def editbio(request):
 
 def createpost(request):
     user = request.user
-    profile = Profile.objects.get(user=user)
     style = Tag.objects.get(tag="Style")
     relationship = Tag.objects.get(tag="Relationship")
     design = Tag.objects.get(tag="Design")
@@ -83,43 +82,45 @@ def createpost(request):
     if user.is_authenticated == False:
         return redirect("index")
     
-    if profile.is_editor == False:
-        return redirect("index")
+    else:
+        profile = Profile.objects.get(user=user)    
+        if profile.is_editor == False:
+            return redirect("index")
     
-    if request.POST:
-        tag = Tag.objects.get(tag=request.POST.get("tag"))
-        newpost = Post(title=request.POST.get("title"), breif=request.POST.get("breif"), snippet=request.POST.get("snippet"), headimg=request.FILES.get("image"), tag=tag, profile=profile)
-        newpost.save()
-        profile.draft_posts = profile.draft_posts + 1
-        profile.total_posts = profile.total_posts + 1
-        profile.save()
-        return redirect("draft-posts")
+        if request.POST:
+            tag = Tag.objects.get(tag=request.POST.get("tag"))
+            newpost = Post(title=request.POST.get("title"), breif=request.POST.get("breif"), snippet=request.POST.get("snippet"), headimg=request.FILES.get("image"), tag=tag, profile=profile)
+            newpost.save()
+            profile.draft_posts = profile.draft_posts + 1
+            profile.total_posts = profile.total_posts + 1
+            profile.save()
+            return redirect("draft-posts")
     
     return render(request, "create_post.html", context)
 
 def draftedpost(request):
     user = request.user
-    profile = Profile.objects.get(user=user)
-    posts = Post.objects.filter(profile=profile, isPublished=False).order_by("-timestamp")
-    context ={
-        "profile": profile,
-        "posts": posts
-    }
+    
+    context ={}
 
     if user.is_authenticated == False:
         return redirect("index")
+    else:
+        profile = Profile.objects.get(user=user)
+        posts = Post.objects.filter(profile=profile, isPublished=False).order_by("-timestamp")
+
+        context["profile"] = profile
+        context["posts"] = posts
     
-    if profile.is_editor == False:
-        return redirect("index")
+        if profile.is_editor == False:
+            return redirect("index")
     
     return render(request, "draftedpost.html", context)
     
 def editpost(request, pk):
     user = request.user
-    profile = Profile.objects.get(user=user)
     post = Post.objects.get(slug=pk)
     context = {
-        "profile": profile,
         "post": post,
     }
 
@@ -128,24 +129,27 @@ def editpost(request, pk):
     if sections:
         context["sections"] = sections
 
-    if post.profile == profile:
-        if request.POST:
-            newsection = Section(secimg=request.FILES.get("image"), body=request.POST.get("body"), blogpost=post)
-            newsection.save()
-            return HttpResponseRedirect(request.path_info) 
-    else:
-        return redirect("index") 
+    
      
 
     if user.is_authenticated == False:
         return redirect("index") 
+    else:
+        profile = Profile.objects.get(user=user)
+        context["profile"] = profile
+        if post.profile == profile:
+            if request.POST:
+                newsection = Section(secimg=request.FILES.get("image"), body=request.POST.get("body"), blogpost=post)
+                newsection.save()
+                return HttpResponseRedirect(request.path_info) 
+        else:
+            return redirect("index") 
     
     return render(request, "editpost.html", context)
 
 
 def publishpost(request, pk):
-    user = request.user
-    profile = Profile.objects.get(user=user)
+    user = request.user    
     post = Post.objects.get(slug=pk)
     context ={
         "user": user,
@@ -154,18 +158,19 @@ def publishpost(request, pk):
 
     if user.is_authenticated == False:
         return redirect("index")
-    
-    if post.profile == profile:
-        post.isPublished = True
-        post.save()
     else:
-        return redirect("index")
+        profile = Profile.objects.get(user=user)
+        if post.profile == profile:
+            post.isPublished = True
+            post.save()
+        else:
+            return redirect("index")
     
     return render(request, "published.html", context)
 
 def deletepost(request, pk):
     user = request.user
-    profile = Profile.objects.get(user=user)
+    
     post = Post.objects.get(slug=pk)
     context = {
         "post": post,
@@ -173,35 +178,39 @@ def deletepost(request, pk):
 
     if user.is_authenticated == False:
         return redirect("index")
-    
-    if post.profile == profile:
-        post.delete()
     else:
-        return redirect("index")
+        profile = Profile.objects.get(user=user)    
+        if post.profile == profile:
+            post.delete()
+        else:
+            return redirect("index")
 
     return render(request, "deleted.html", context)
 
 
 def manageteam(request):
     user = request.user
-    profile = Profile.objects.get(user=user)
+    
 
     team = Profile.objects.all()
 
     context = {
         "user": user,
-        "profile": profile,
         "teams": team,
     }
 
     if user.is_authenticated == False:
         return redirect("index")
+    else:
+        profile = Profile.objects.get(user=user)
+        context["profile"] = profile
+
     
     return render(request, "manageteam.html", context)
 
 def editteamMember(request, pk):
     user = request.user
-    profile = Profile.objects.get(user=user)
+    
     member = Profile.objects.get(id=pk)
 
     context ={
@@ -211,66 +220,67 @@ def editteamMember(request, pk):
 
     if user.is_authenticated == False:
         return redirect("index")
-    
-    if profile.is_owner == False:
-        return redirect("manageteam")
-    
-    if member.is_owner == True:
-        return redirect("manageteam")
-    
-    if request.POST:
-        if member.is_editor:
-            member.is_editor = False
-            member.save()
-        else:
-            member.is_editor = True
-            member.save()
+    else:  
+        profile = Profile.objects.get(user=user)  
+        if profile.is_owner == False:
+            return redirect("manageteam")
+        
+        if member.is_owner == True:
+            return redirect("manageteam")
+        
+        if request.POST:
+            if member.is_editor:
+                member.is_editor = False
+                member.save()
+            else:
+                member.is_editor = True
+                member.save()
 
-        return HttpResponseRedirect(request.path_info)
+            return HttpResponseRedirect(request.path_info)
 
     return render(request, "editmember.html", context)
 
 def deletemember(request, pk):
     user = request.user
-    profile = Profile.objects.get(user=user)
+    
 
     member = Profile.objects.get(id=pk)
     usergoing = get_object_or_404(User, id=member.user.id)
 
     if user.is_authenticated == False:
         return redirect("index")
-    
-    if profile.is_owner == False:
-        return redirect("manageteam")
-    
-    if member.is_owner == True:
-        return redirect("manageteam")
-    
-    usergoing.delete()
+    else: 
+        profile = Profile.objects.get(user=user)   
+        if profile.is_owner == False:
+            return redirect("manageteam")
+        
+        if member.is_owner == True:
+            return redirect("manageteam")
+        else:        
+            usergoing.delete()
     
     return render(request, "deletemember.html")
 
 def addteammember(request):
     user = request.user
-    profile = Profile.objects.get(user=user)
-
-    context={
-        "profile": profile,
-    }
+    
+    context={}
 
     if user.is_authenticated == False:
         return redirect("index")
-    
-    if profile.is_owner == False:
-        return redirect("manageteam")
-    
-    if request.POST:
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            Profile.objects.create(fname="change", lname="name", bio="change bio", user=form.save())
-            form.save()
-            return redirect("manage-team")
-        else:
-            context['addmember'] = form
+    else:
+        profile = Profile.objects.get(user=user)
+        if profile.is_owner == False:
+            return redirect("manageteam")
+        
+        if request.POST:
+            form = SignUpForm(request.POST)
+            if form.is_valid():
+                Profile.objects.create(fname="change", lname="name", bio="change bio", user=form.save())
+                form.save()
+                return redirect("manage-team")
+            else:
+                context['addmember'] = form
     
     return render(request, "addmember.html", context)
+

@@ -51,6 +51,8 @@
 	{% block content %}
 
 	{% endblock content %} 
+
+	{% if user.is_authenticated %}
 	<script>
 		var nav = document.getElementById("navbar");
 		var opene = document.getElementById("open");
@@ -76,6 +78,7 @@
 
 		
 	</script>
+	{% endif %}
 	 
 </body> 
 
