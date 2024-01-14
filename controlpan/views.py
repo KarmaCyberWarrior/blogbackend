@@ -13,7 +13,7 @@ def index(request, *args, **kwargs):
     user = request.user
     if user.is_authenticated:
         profile = Profile.objects.get(user=user)
-        posts = Post.objects.filter(profile=profile, isPublished=True)
+        posts = Post.objects.filter(profile=profile, isPublished=True)[:20]
         profilepost = numerize.numerize(profile.total_posts)
         publishedpost = numerize.numerize(profile.published_post)
         draftpost = numerize.numerize(profile.draft_posts)
@@ -223,10 +223,10 @@ def editteamMember(request, pk):
     else:  
         profile = Profile.objects.get(user=user)  
         if profile.is_owner == False:
-            return redirect("manageteam")
+            return redirect("manage-team")
         
         if member.is_owner == True:
-            return redirect("manageteam")
+            return redirect("manage-team")
         
         if request.POST:
             if member.is_editor:
@@ -303,3 +303,21 @@ def editname(request):
             return redirect("index")
         
     return render(request, "editname.html", context)
+
+def changepfp(request):
+    user = request.user
+    context = {}
+
+    if user.is_authenticated == False:
+        return redirect("index")
+    else:
+        profile = Profile.objects.get(user=user)
+        context["profile"] = profile
+        if request.POST:
+            image = request.FILES.get("pfp")
+
+            profile.displaypic = image
+            profile.save()
+            return redirect("index")
+        
+    return render(request, "changepfp.html", context)

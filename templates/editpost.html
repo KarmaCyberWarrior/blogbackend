@@ -75,6 +75,85 @@
         </div>
     </div>
 
+    <div class="fixed w-full h-0 bg-[#4D3b3a39] top-0 left-0 flex justify-center items-center overflow-hidden" id="unpublishform">
+        <div class="w-5/6 h-[20rem] bg-white rounded-md grid grid-cols-1 justify-items-center breakwords">
+
+            <p class="text-xl font-semibold text-center mt-12">Are you sure you want to Unpublish?</p>
+
+            <div class="flex text-lg">
+                <a href="http://127.0.0.1:8000/unpublish/{{post.slug}}"><p class="text-lime-700 cursor-pointer">Confirm</p></a>
+                <p class="ml-8 text-red-600 underline decoration-red-600 cursor-pointer" id="closeunpublish">Cancel</p>
+            </div>
+
+        </div>
+    </div>
+
+    {% if post.isPublished %}
+    <script>
+        var publishmenu = document.getElementById("unpublishform");
+		var publishbtn = document.getElementById("unpublish");
+		var closepublish = document.getElementById("closeunpublish");
+
+		var delmenu = document.getElementById("delconfirm");
+		var delbtn = document.getElementById("delete");
+		var closedel = document.getElementById("closedel");
+
+		var secform = document.getElementById("secform");
+		var opensecform = document.getElementById("opensecform");
+		var closesecform = document.getElementById("closesecform");
+
+		function opendelmenu(){
+			delmenu.style.height = "100%";
+		}
+
+		function closedelmenu(){
+			delmenu.style.height = "0";
+		}
+
+		function opensec(){
+			secform.style.width = "100%";
+			secform.style.marginTop = "7rem";
+		}
+
+		function closesec(){
+			secform.style.width = "0";
+			secform.style.marginTop = "0";
+		}
+
+		function closepub(){
+			publishmenu.style.height = "0";
+		}
+
+		function publish(){
+			publishmenu.style.height = "100%";
+		}
+
+        opensecform.addEventListener('click', function(){
+			opensec();
+		});
+
+		closesecform.addEventListener('click', function(){
+			closesec();
+		});
+
+		publishbtn.addEventListener('click', function(){
+			publish();
+		});
+
+		closepublish.addEventListener('click', function(){
+			closepub();
+		});
+
+		delbtn.addEventListener('click', function(){
+			opendelmenu();
+		});
+
+		closedel.addEventListener('click', function(){
+			closedelmenu();
+		});
+    </script>
+
+    {% else %}
     <script>
         var publishmenu = document.getElementById("confirm");
 		var publishbtn = document.getElementById("publish");
@@ -138,4 +217,5 @@
 			closedelmenu();
 		});
     </script>
+    {% endif %}
 {% endblock %}

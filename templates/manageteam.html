@@ -15,8 +15,20 @@
                     </div>
                 {% else %}
                     <div class="grid grid-cols-1 justify-items-center">
-                        <img src="http://127.0.0.1:8000/blogapi/profile-photo/{{team.id}}" class="w-[20rem] h-[15rem]">
-                        <a href="http://127.0.0.1:8000/edit-member/{{team.id}}"><p class="text-lg mt-4 hover:text-rose-700">{{team.fname}} {{team.lname}}</p></a>
+                        {% if team.displaypic %}
+                            <img src="http://127.0.0.1:8000/blogapi/profile-photo/{{team.id}}" class="w-[20rem] h-[15rem]">
+                        {% else %}
+                            <div class="w-[20rem] h-[15rem] bg-gray-300 flex justify-center items-center">
+                                <p>No dp</p>
+                            </div>
+                        {% endif %}
+                        {% if profile.is_owner %}
+                            <a href="http://127.0.0.1:8000/edit-member/{{team.id}}">
+                                <p class="text-lg mt-4 hover:text-rose-700 cursor-pointer">{{team.fname}} {{team.lname}}</p>
+                            </a>
+                        {% else %}
+                            <p class="text-lg mt-4">{{team.fname}} {{team.lname}}</p>
+                        {% endif %}
                         <p class="mt-2">{{team.bio}}</p>
                     </div>
                 {% endif %}

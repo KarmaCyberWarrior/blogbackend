@@ -16,4 +16,5 @@ urlpatterns = [
     path('delete-member/<str:pk>', views.deletemember, name="delete-member"),
     path('add-member/', views.addteammember, name="add-member"),
     path('editname/', views.editname, name="editname"),
+    path('update-dp/', views.changepfp, name="update-dp"),
 ]

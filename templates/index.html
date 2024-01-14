@@ -13,12 +13,14 @@
             <div class="bg-white p-2 sm:p-4 rounded-md shadow-md md:col-span-2">
               <div class="flex flex-row">
                 <div class="w-20 h-20 rounded-full bg-gray-300 flex justify-center items-center">
-                  
-                  {% if profile.displaypic %}
-                    <img src="http://127.0.0.1:8000/blogapi/profile-photo/{{profile.id}}/" class="w-20 h-20 rounded-full">
-                  {% else %}
-                    <p>Upload</p>                  
-                  {% endif %}
+
+                  <a href="{% url 'update-dp' %}">                  
+                    {% if profile.displaypic %}
+                      <img src="http://127.0.0.1:8000/blogapi/profile-photo/{{profile.id}}/" class="w-20 h-20 rounded-full">
+                    {% else %}
+                      <p>Upload</p>                  
+                    {% endif %}
+                  </a>
                 </div>
                 <h1 class="text-xl sm:text-3xl mt-6 ml-3"><span class="hidden md:inline">Welcome Back</span> <span class="text-rose-700">{{profile.fname}} {{profile.lname}}</h1>
                 <a href="{% url 'editname' %}"><svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" class="mt-8 ml-6" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/></svg></a>
@@ -29,6 +31,8 @@
                 <a href="{% url 'editbio'%}"><button class="border w-[7rem] h-8 border-rose-700 mt-4 rounded-md hover:bg-rose-700 hover:text-white">Edit Bio</button></a>
               </div>  
             </div> 
+
+            {% if profile.is_editor %}
             
             <div class="bg-white p-2 sm:p-4 rounded-md shadow-md">
               <p class="text-xl">Posts</p>
@@ -54,10 +58,11 @@
                 {% for post in posts %}
                   <div class="flex">
                     <img src="http://127.0.0.1:8000/blogapi/post-photo/{{post.id}}/" class="w-20 h-12">
-                    <div class="ml-4">
+                    <a href="http://127.0.0.1:8000/edit-post/{{post.slug}}"><div class="ml-4">
                       <p class="hover:text-rose-700 cursor-pointer">{{post.title}}</p>
                       <p class="text-sm">{{post.snippet}}</p>
                     </div>
+                    </a>
                   </div>
                   <div class="w-full h-px bg-gray-300"></div>
                 {% endfor %}
@@ -65,10 +70,13 @@
                 
               </div>
             </div>
+            {% endif %}
           </div>
 
           <div class="grid grid-cols-1 gap-8 mt-12">
+            {% if profile.is_editor %}
             <p class="text-lg text-center">Post you create would be in drated post. you can edit drafted post to futher edit the post an add sections</p>
+            {% endif %}
             <div class="grid grid-cols-1 justify-items-center lg:grid-cols-2 xl:grid-cols-3 gap-2">
               {% if profile.is_owner %}
                 <a href="{% url 'manage-team' %}"><button class="h-10 rounded-md border border-rose-700 hover:text-white hover:bg-rose-700 w-[10rem]">Manage team</button></a>
@@ -82,9 +90,12 @@
               {% endif %}
             </div>
 
-            <div class="bg-white shadow-md rounded-md h-[20rem] overflow-y-scroll">
-              
+            {% if profile.is_editor %}
+
+            <div class="bg-white shadow-md rounded-md h-[32rem] overflow-y-scroll">
+              <p class="mt-2 text-center text-xl">Notifications</p>
             </div>
+            {% endif %}
           </div>
         </div>
       </div>

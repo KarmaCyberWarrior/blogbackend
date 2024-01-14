@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="mt-[10rem] flex justify-center w-full">
+        <div>
+            <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+                <label class="text-lg font-semibold">Image: </label><br>
+                <input type="file" class="mt-2" name="pfp" accept="image/jpeg"><br><br>
+                <button type="submit" class="border w-[10rem] h-10 border-rose-700">Change</button><br><br>
+                <a href="{% url 'index' %}" class="text-lg text-rose-700">Cancel</a>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
