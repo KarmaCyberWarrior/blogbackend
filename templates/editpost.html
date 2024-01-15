@@ -7,7 +7,7 @@
             <p class="text-3xl font-semibold">{{post.title}}</p>
             <p class="text-lg text-rose-700 uppercase mt-2">{{post.tag}}</p>
             <div class="w-5/6 md:w-[40rem] breakwords mt-6">
-                <img src="http://127.0.0.1:8000/blogapi/post-photo/{{post.id}}">
+                <img src="https://coffeewithrei.pythonanywhere.com/blogapi/post-photo/{{post.id}}">
                 <p class="mt-4 text-lg">{{post.breif}}</p>
 
                 <div>
@@ -16,7 +16,7 @@
                         {% for section in sections %}
                             <section>
                                 {% if section.secimg %}
-                                    <img src="http://127.0.0.1:8000/blogapi/section-photo/{{section.id}}">
+                                    <img src="https://coffeewithrei.pythonanywhere.com/blogapi/section-photo/{{section.id}}">
                                 {% endif %}
                                 <p class="mt-8 text-lg">{{section.body}}</p>
                             </section>
@@ -55,7 +55,7 @@
             <p class="text-xl font-semibold text-center mt-12">Are you sure you want to Publish?</p>
 
             <div class="flex text-lg">
-                <a href="http://127.0.0.1:8000/publish/{{post.slug}}"><p class="text-lime-700 cursor-pointer">Confirm</p></a>
+                <a href="https://coffeewithrei.pythonanywhere.com/publish/{{post.slug}}"><p class="text-lime-700 cursor-pointer">Confirm</p></a>
                 <p class="ml-8 text-red-600 underline decoration-red-600 cursor-pointer" id="closepublish">Cancel</p>
             </div>
 
@@ -68,7 +68,7 @@
             <p class="text-xl font-semibold text-center mt-12">Are you sure you want to Delete?</p>
 
             <div class="flex text-lg">
-                <a href="http://127.0.0.1:8000/delete/{{post.slug}}"><p class="text-lime-700 cursor-pointer">Confirm</p></a>
+                <a href="https://coffeewithrei.pythonanywhere.com/delete/{{post.slug}}"><p class="text-lime-700 cursor-pointer">Confirm</p></a>
                 <p class="ml-8 text-red-600 underline decoration-red-600 cursor-pointer" id="closedel">Cancel</p>
             </div>
 
@@ -81,7 +81,7 @@
             <p class="text-xl font-semibold text-center mt-12">Are you sure you want to Unpublish?</p>
 
             <div class="flex text-lg">
-                <a href="http://127.0.0.1:8000/unpublish/{{post.slug}}"><p class="text-lime-700 cursor-pointer">Confirm</p></a>
+                <a href="https://coffeewithrei.pythonanywhere.com/unpublish/{{post.slug}}"><p class="text-lime-700 cursor-pointer">Confirm</p></a>
                 <p class="ml-8 text-red-600 underline decoration-red-600 cursor-pointer" id="closeunpublish">Cancel</p>
             </div>
 

@@ -7,8 +7,8 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12 ml-8 mr-8">
         {% for post in posts %}
             <div>
-                <img src="http://127.0.0.1:8000/blogapi/post-photo/{{post.id}}" class="w-full h-[15rem]">
-                <a href="http://127.0.0.1:8000/edit-post/{{post.slug}}"><p class="text-center mt-4 text-xl hover:text-rose-700 cursor-pointer">{{ post.title }}</p></a>
+                <img src="https://coffeewithrei.pythonanywhere.com/blogapi/post-photo/{{post.id}}" class="w-full h-[15rem]">
+                <a href="https://coffeewithrei.pythonanywhere.com/edit-post/{{post.slug}}"><p class="text-center mt-4 text-xl hover:text-rose-700 cursor-pointer">{{ post.title }}</p></a>
                 <p class="text-lg text-center mt-2">{{post.snippet}}</p>
             </div>
         {% endfor %}
