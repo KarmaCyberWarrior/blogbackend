@@ -16,6 +16,7 @@ urlpatterns = [
     path('relationship-list/', views.relationshipList, name="relationship-list"),
     path('wellbeing-list/', views.wellbeingList, name="wellbeing-list"),
     path('post-list-pag/', views.postPagList, name="post-list-pag"),
+    path('profile-list/', views.aboutList, name="profile-list"),
     path('post-list-trend/', views.postListTrend, name="post-list-trend"),
     path('post-list-rand/', views.postListRand, name="post-list-rand"),
     path('post-list-comment/', views.postListComment, name="post-list-comment"),

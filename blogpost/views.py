@@ -79,6 +79,12 @@ def postPagList(request):
     serializer = PostSerializer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
 
+@api_view(['GET'])
+def aboutList(request):
+    profile = Profile.objects.all()
+    serializer = ProfileSerializer(profile, many=True)
+
+    return Response(serializer.data)
 
 
 @api_view(['GET'])
