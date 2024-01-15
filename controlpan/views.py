@@ -163,6 +163,8 @@ def publishpost(request, pk):
         if post.profile == profile:
             post.isPublished = True
             post.save()
+            profile.published_post = profile.published_post + 1
+            profile.draft_posts = profile.draft_posts - 1
         else:
             return redirect("index")
     
@@ -181,7 +183,14 @@ def deletepost(request, pk):
     else:
         profile = Profile.objects.get(user=user)    
         if post.profile == profile:
-            post.delete()
+            if post.isPublished:
+                post.delete()
+                profile.total_posts = profile.total_posts - 1
+                profile.published_post = profile.published_post - 1
+            else:
+                post.delete()
+                profile.total_posts = profile.total_posts - 1
+                profile.draft_posts = profile.draft_posts - 1
         else:
             return redirect("index")
 
@@ -321,3 +330,24 @@ def changepfp(request):
             return redirect("index")
         
     return render(request, "changepfp.html", context)
+
+
+def unpublish(request, pk):
+    user = request.user    
+    post = Post.objects.get(slug=pk)
+    context ={
+        "user": user,
+        "post": post,
+    }
+
+    if user.is_authenticated == False:
+        return redirect("index")
+    else:
+        profile = Profile.objects.get(user=user)
+        if post.profile == profile:
+            post.isPublished = False
+            post.save()
+        else:
+            return redirect("index")
+    
+    return render(request, "unpublished.html", context)

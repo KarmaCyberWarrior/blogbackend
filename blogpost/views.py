@@ -272,6 +272,8 @@ def postListComment(request):
 @api_view(['GET'])
 def postDetail(request, pk):
     post = Post.objects.get(slug=pk, isPublished=True)
+    post.views = post.views + 1
+    post.profile.totalpost_impressions = post.profile.totalpost_impressions + 1
     serializer = PostSerializer(post, many=False)
     return Response(serializer.data)
 

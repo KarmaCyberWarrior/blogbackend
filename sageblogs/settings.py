@@ -67,6 +67,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     # Add the list of allowed origins (e.g., 'http://localhost:3000')
     'http://localhost:3000',
+    'https://coffeewithrei.vercel.app'
 ]
 
 CORS_ALLOW_METHODS = [

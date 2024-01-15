@@ -86,7 +86,9 @@ class Comment(models.Model):
 
         self.post.commentcount = Comment.objects.filter(post=self.post).count()
         self.post.totalcount   = Comment.objects.filter(post=self.post).count() + self.replycount
+        self.post.profile.total_comments =  self.post.profile.total_comments + 1
         self.post.save()
+        self.post.profile.save()
 
 class Sub(models.Model):
     name        = models.CharField(max_length=20)

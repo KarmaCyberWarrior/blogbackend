@@ -10,6 +10,7 @@ urlpatterns = [
     path('draft-posts/', views.draftedpost, name="draft-posts"),
     path('edit-post/<str:pk>', views.editpost, name="edit-post"),
     path('publish/<str:pk>', views.publishpost, name="publish"),
+    path('unpublish/<str:pk>', views.unpublish, name="unpublish"),
     path('delete/<str:pk>', views.deletepost, name="delete"),
     path('team/', views.manageteam, name="manage-team"),
     path('edit-member/<str:pk>', views.editteamMember, name="edit-member"),
