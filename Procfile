@@ -1,0 +1,1 @@
+web: gunicorn sageblogs.wsgi --log file--
